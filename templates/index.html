@@ -1,0 +1,90 @@
+<html>
+  <head>
+    {% block head %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+    crossorigin="anonymous"></script>
+    <title>{% block title %}{% endblock %} Bagels and Baguettes</title>
+    {% endblock %}
+
+    <script>
+      $(document).ready(function() {
+        var hydration;
+        setthings();
+        recipe();
+        function setthings(){
+            var choice = $("input[name='borb']:checked").val();
+            if (choice == "bagel"){
+                hydration = .58;
+                $("#inputItems").val(12);
+                $("#inputSize").val(80);
+            }
+            if (choice == "baguette"){
+                hydration = .68;
+                $("#inputItems").val(4);
+                $("#inputSize").val(90);
+            }
+        }
+        function recipe(){
+            var items = $("#inputItems").val();
+            var size = $("#inputSize").val();
+            var outgrams = (items*size - 120);
+            var outwater = (items*size - 120)*hydration;
+            var outyeast = (items*size)*1.5/500;
+            var outsalt = (items*size)*12/500;
+            $("#outputGrams").text(parseFloat(outgrams).toFixed(0));
+            $("#outputWater").text(parseFloat(outwater).toFixed(0));
+            $("#outputYeast").text(parseFloat(outyeast).toFixed(1));
+            $("#outputSalt").text(parseFloat(outsalt).toFixed(0));
+        }
+        $("#inputItems, #inputSize").keyup(function() {
+            recipe();
+        });
+        $("input[name='borb']").click(function(){
+            setthings();
+            recipe();
+        })
+      });
+      </script>
+  </head>
+  <body>
+    <div class="container-fluid">
+    <h1>Bagels and Baguettes</h1>
+    <h3>A quick calculator/scaler I've found works great for batching bagels and baguettes, made with a poolish. Default values are what I find work best for me.
+    </h3>
+    <br />
+    <form>
+        <div class="form-group">
+            <input type="radio" id="bagels" name="borb" value="bagel">
+            <label for="bagels">Bagels</label>
+            <input type="radio" id="baguettes" name="borb" value="baguette" checked>
+            <label for="baguettes">Baguettes</label>
+        </div>
+      <div class="form-group">
+        <label for="inputItems">How many Bagels or Baguettes?</label>
+        <input type="number" placeholder="Number of items" class="form-control" id="inputItems" value="4">
+      </div>
+      <div class="form-group">
+        <label for="inputSize">How many grams of flour?</label>
+        <input type="number" placeholder="Enter grams" class="form-control" id="inputSize" value="80">
+      </div>
+      <br />
+    </form>
+    </div>
+
+    <h2>Dough</h2>
+    <h3><span id="outputGrams"></span>g AP flour.</h3>
+    <h3><span id="outputWater"></span>g tepid water.</h3>
+    <h3><span id="outputYeast"></span>teaspoons active yeast.</h3>
+    <h3><span id="outputSalt"></span>g salt.</h3>
+    <br />
+    <h2>Poolish</h2>
+    <h3>120g AP flour.</h3>
+    <h3>120g tepid water.</h3>
+    <h3>Pinch dry active yeast.</h3>
+
+
+  </body>
+  </html>
