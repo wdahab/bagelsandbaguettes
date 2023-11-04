@@ -31,7 +31,7 @@
             var items = $("#inputItems").val();
             var size = $("#inputSize").val();
             var outgrams = (items*size - 120);
-            var outwater = (items*size - 120)*hydration;
+            var outwater = (items*size*hydration)-120;
             var outyeast = (items*size)*1.5/500;
             var outsalt = (items*size)*12/500;
             $("#outputGrams").text(parseFloat(outgrams).toFixed(0));
